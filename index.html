@@ -6,9 +6,9 @@
   <title>개발자 포트폴리오</title>
   <style>
     :root {
-      --gold: #0a192f;
-      --bg: #64ffda;
-      --text: #ccd6f6;
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --accent-color: #00bcd4;
     }
 
     * {
@@ -18,28 +18,27 @@
     }
 
     body {
-      background-color: var(--bg);
-      color: var(--text);
+      background-color: var(--bg-color);
+      color: var(--text-color);
       font-family: 'Segoe UI', sans-serif;
       line-height: 1.6;
     }
 
     header {
-      background: #000;
-      padding: 3rem 1rem;
       text-align: center;
-      border-bottom: 1px solid var(--gold);
+      padding: 3rem 1rem;
+      border-bottom: 1px solid #333;
     }
 
     header h1 {
-      font-size: 2.5rem;
-      color: var(--gold);
+      font-size: 3rem;
+      color: var(--accent-color);
       margin-bottom: 0.5rem;
     }
 
     header p {
-      font-size: 1.1rem;
-      color: #ccc;
+      font-size: 1.2rem;
+      color: #aaa;
     }
 
     main {
@@ -53,9 +52,10 @@
     }
 
     h2 {
-      color: var(--gold);
+      color: var(--accent-color);
       margin-bottom: 1rem;
-      border-left: 4px solid var(--gold);
+      font-size: 1.5rem;
+      border-left: 4px solid var(--accent-color);
       padding-left: 1rem;
     }
 
@@ -66,20 +66,21 @@
 
     ul li::before {
       content: '•';
-      color: var(--gold);
+      color: var(--accent-color);
       padding-right: 0.5rem;
     }
 
     .project {
       background: #1e1e1e;
-      border: 1px solid #333;
       padding: 1rem;
       margin-bottom: 1.5rem;
-      border-left: 4px solid var(--gold);
+      border-left: 4px solid var(--accent-color);
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
     a {
-      color: var(--gold);
+      color: var(--accent-color);
       text-decoration: none;
     }
 
@@ -88,11 +89,10 @@
     }
 
     footer {
-      background: #000;
-      color: #888;
       text-align: center;
       padding: 1rem;
-      border-top: 1px solid var(--gold);
+      border-top: 1px solid #333;
+      color: #777;
     }
   </style>
 </head>
@@ -100,22 +100,22 @@
 
   <header>
     <h1>홍길동</h1>
-    <p>풀스택 개발자 | 사용자 중심의 웹 경험을 만듭니다</p>
+    <p>풀스택 개발자 | 혁신을 만드는 코드</p>
   </header>
 
   <main>
     <section>
       <h2>소개</h2>
-      <p>사용자 중심의 웹 애플리케이션을 설계하고 개발하는 것을 좋아합니다. 지속적인 학습과 협업을 중요하게 생각하며, 실용적이고 세련된 코드를 추구합니다.</p>
+      <p>문제를 해결하는 데 집중하며, 실용적이고 깔끔한 웹 애플리케이션을 개발합니다. 백엔드와 프론트엔드를 아우르며 효율적인 아키텍처를 설계합니다.</p>
     </section>
 
     <section>
       <h2>기술 스택</h2>
       <ul>
         <li>JavaScript, TypeScript, Python</li>
-        <li>React, Vue.js, Next.js</li>
-        <li>Node.js, Express, Django</li>
-        <li>MongoDB, PostgreSQL</li>
+        <li>React, Next.js, Vue</li>
+        <li>Node.js, Django, FastAPI</li>
+        <li>MySQL, MongoDB, PostgreSQL</li>
         <li>Git, Docker, AWS</li>
       </ul>
     </section>
@@ -124,15 +124,15 @@
       <h2>프로젝트</h2>
 
       <div class="project">
-        <h3>포트폴리오 사이트</h3>
-        <p>반응형 웹 기반의 개인 포트폴리오 페이지입니다. HTML, CSS, JavaScript를 사용하여 직접 디자인하고 개발했습니다.</p>
-        <p><a href="https://your-portfolio-link.com" target="_blank">프로젝트 보기</a></p>
+        <h3>DevTools Dashboard</h3>
+        <p>개발자 도구 통합 대시보드. Next.js + Tailwind 기반, 사용자 맞춤형 기능 지원.</p>
+        <p><a href="#">프로젝트 보기</a></p>
       </div>
 
       <div class="project">
-        <h3>Todo 앱 (React + Firebase)</h3>
-        <p>Firebase 인증과 실시간 데이터베이스를 사용한 할 일 관리 앱입니다. React로 구성된 컴포넌트 기반 구조입니다.</p>
-        <p><a href="https://your-todo-app.com" target="_blank">프로젝트 보기</a></p>
+        <h3>AI 기반 Todo 앱</h3>
+        <p>ChatGPT API와 연동된 스마트 할일 관리 앱. React + Firebase로 제작.</p>
+        <p><a href="#">프로젝트 보기</a></p>
       </div>
     </section>
 
