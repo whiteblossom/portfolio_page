@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>개발자 포트폴리오</title>
   <style>
     :root {
-      --bg-color: #121212;
-      --text-color: #e0e0e0;
-      --accent-color: #00bcd4;
+      --bg: #ffffff;
+      --section-bg: #f9f5ef;
+      --text: #333;
+      --accent: #b89b72;
     }
 
     * {
@@ -18,27 +19,28 @@
     }
 
     body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
       font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
       line-height: 1.6;
     }
 
     header {
-      text-align: center;
       padding: 3rem 1rem;
-      border-bottom: 1px solid #333;
+      text-align: center;
+      background-color: var(--section-bg);
+      border-bottom: 1px solid #e0dcd5;
     }
 
     header h1 {
-      font-size: 3rem;
-      color: var(--accent-color);
-      margin-bottom: 0.5rem;
+      font-size: 2.8rem;
+      color: var(--accent);
     }
 
     header p {
-      font-size: 1.2rem;
-      color: #aaa;
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      color: #666;
     }
 
     main {
@@ -49,13 +51,17 @@
 
     section {
       margin-bottom: 3rem;
+      padding: 2rem;
+      background-color: var(--section-bg);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     h2 {
-      color: var(--accent-color);
       margin-bottom: 1rem;
-      font-size: 1.5rem;
-      border-left: 4px solid var(--accent-color);
+      font-size: 1.6rem;
+      color: var(--accent);
+      border-left: 4px solid var(--accent);
       padding-left: 1rem;
     }
 
@@ -65,34 +71,37 @@
     }
 
     ul li::before {
-      content: '•';
-      color: var(--accent-color);
-      padding-right: 0.5rem;
+      content: '›';
+      color: var(--accent);
+      font-weight: bold;
+      margin-right: 0.5rem;
     }
 
     .project {
-      background: #1e1e1e;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      border-left: 4px solid var(--accent-color);
-      border-radius: 6px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      margin-top: 1rem;
     }
 
-    a {
-      color: var(--accent-color);
+    .project h3 {
+      margin: 0.5rem 0;
+      color: var(--text);
+    }
+
+    .project a {
+      color: var(--accent);
       text-decoration: none;
     }
 
-    a:hover {
+    .project a:hover {
       text-decoration: underline;
     }
 
     footer {
       text-align: center;
-      padding: 1rem;
-      border-top: 1px solid #333;
-      color: #777;
+      padding: 2rem 1rem;
+      color: #999;
+      font-size: 0.9rem;
+      border-top: 1px solid #eee;
+      margin-top: 3rem;
     }
   </style>
 </head>
@@ -100,23 +109,23 @@
 
   <header>
     <h1>홍길동</h1>
-    <p>풀스택 개발자 | 혁신을 만드는 코드</p>
+    <p>프론트엔드 개발자 · 사용자 경험 중심의 UI 설계자</p>
   </header>
 
   <main>
+
     <section>
       <h2>소개</h2>
-      <p>문제를 해결하는 데 집중하며, 실용적이고 깔끔한 웹 애플리케이션을 개발합니다. 백엔드와 프론트엔드를 아우르며 효율적인 아키텍처를 설계합니다.</p>
+      <p>안녕하세요, 섬세하고 직관적인 인터페이스를 구축하는 프론트엔드 개발자 홍길동입니다. 웹 접근성과 성능, 미니멀한 디자인을 중시하며 사용자 중심의 솔루션을 만듭니다.</p>
     </section>
 
     <section>
       <h2>기술 스택</h2>
       <ul>
-        <li>JavaScript, TypeScript, Python</li>
-        <li>React, Next.js, Vue</li>
-        <li>Node.js, Django, FastAPI</li>
-        <li>MySQL, MongoDB, PostgreSQL</li>
-        <li>Git, Docker, AWS</li>
+        <li>HTML5 / CSS3 / JavaScript (ES6+)</li>
+        <li>React / Next.js / Vue</li>
+        <li>SCSS / Styled-components / Tailwind CSS</li>
+        <li>REST API / Firebase / Git</li>
       </ul>
     </section>
 
@@ -124,28 +133,30 @@
       <h2>프로젝트</h2>
 
       <div class="project">
-        <h3>DevTools Dashboard</h3>
-        <p>개발자 도구 통합 대시보드. Next.js + Tailwind 기반, 사용자 맞춤형 기능 지원.</p>
-        <p><a href="#">프로젝트 보기</a></p>
+        <h3>미니멀 포트폴리오 웹</h3>
+        <p>React 기반으로 제작한 반응형 개인 포트폴리오 사이트. 깔끔한 구성과 애니메이션 효과를 적용.</p>
+        <a href="#">프로젝트 링크</a>
       </div>
 
       <div class="project">
-        <h3>AI 기반 Todo 앱</h3>
-        <p>ChatGPT API와 연동된 스마트 할일 관리 앱. React + Firebase로 제작.</p>
-        <p><a href="#">프로젝트 보기</a></p>
+        <h3>디자인 시스템 가이드</h3>
+        <p>Figma 디자인을 바탕으로 구성된 웹 컴포넌트 가이드 페이지. Tailwind 기반 커스텀 테마 적용.</p>
+        <a href="#">프로젝트 링크</a>
       </div>
+
     </section>
 
     <section>
       <h2>연락처</h2>
       <p>Email: <a href="mailto:example@example.com">example@example.com</a></p>
       <p>GitHub: <a href="https://github.com/username" target="_blank">github.com/username</a></p>
-      <p>LinkedIn: <a href="https://linkedin.com/in/username" target="_blank">linkedin.com/in/username</a></p>
+      <p>Blog: <a href="https://blog.example.com" target="_blank">blog.example.com</a></p>
     </section>
+
   </main>
 
   <footer>
-    <p>&copy; 2025 홍길동. All rights reserved.</p>
+    <p>&copy; 2025 홍길동. 모든 권리 보유.</p>
   </footer>
 
 </body>
