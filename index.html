@@ -21,7 +21,7 @@
 	background-color:#9423cf;
 	border-radius: 15%;
 	font-family: 'Titillium web';
-	position: absolute;
+	position: fixed;
 	width:88px;
 	top:850px;
 	right:40px;
@@ -68,17 +68,6 @@
 }
 </style>
 
-<script>
-$(document).ready(function () {
-    var initialTop = parseInt($("#sidebox").css("top"));
-    $(window).scroll(function () {
-        var scrollTop = $(window).scrollTop();
-        $("#sidebox").stop().animate({
-            top: scrollTop + initialTop + "px"
-        }, 200);
-    });
-});
-</script>
 </head>
 
     <body id="page-top">
