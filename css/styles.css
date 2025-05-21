@@ -47,7 +47,6 @@
   box-sizing: border-box;
 }
 
-/* Next step 3열 목표 섹션 스타일 */
 .nextstep-row {
   display: flex;
   justify-content: center;
@@ -60,11 +59,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 180px;
+  width: 240px; /* 기존 180px에서 증가 */
 }
 .nextstep-img {
-  width: 180px;
-  height: 180px;
+  width: 240px; /* 기존 180px에서 증가 */
+  height: 240px; /* 기존 180px에서 증가 */
   object-fit: contain;
   border-radius: 50%;
   background: #f5f5f5;
@@ -81,7 +80,7 @@
   margin-top: 4px;
 }
 
-/* 모바일 반응형 */
+/* 모바일 반응형 유지 */
 @media (max-width: 700px) {
   .nextstep-row {
     flex-direction: column;
@@ -92,7 +91,6 @@
     width: 100%;
   }
 }
-/*여기까지*/
 
 html {
   font-family: sans-serif;
