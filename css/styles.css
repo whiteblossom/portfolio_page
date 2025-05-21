@@ -47,6 +47,53 @@
   box-sizing: border-box;
 }
 
+/* Next step 3열 목표 섹션 스타일 */
+.nextstep-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  margin: 40px 0 60px 0;
+  flex-wrap: wrap;
+}
+.nextstep-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 180px;
+}
+.nextstep-img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #f5f5f5;
+  box-shadow: 0 4px 16px rgba(148,35,207,0.10);
+  margin-bottom: 18px;
+  border: 2px solid #9423cf;
+}
+.nextstep-caption {
+  font-family: 'noto sans', sans-serif;
+  font-size: 1.1rem;
+  color: #9423cf;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 700px) {
+  .nextstep-row {
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+  }
+  .nextstep-col {
+    width: 100%;
+  }
+}
+
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
