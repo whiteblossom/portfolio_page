@@ -10164,6 +10164,11 @@ section.resume-section {
 section.resume-section .resume-section-content {
   width: 100%;
 }
+section.resume-section .resume-section-award {
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
 .next-steps {
   display: flex;
   justify-content: center;
