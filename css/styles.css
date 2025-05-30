@@ -10195,6 +10195,14 @@ section.resume-section-award .resume-section-content {
     min-height: 30vh;
   }
 }
+@media (min-width: 992px) {
+  section.resume-section-award {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
 @media (min-width: 768px) {
   section.resume-section {
     min-height: 100vh;
