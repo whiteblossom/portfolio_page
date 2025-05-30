@@ -10190,7 +10190,11 @@ section.resume-section-award .resume-section-content {
   flex-direction: column;
   align-items: center;
 }
-
+@media (min-width: 768px) {
+  section.resume-section-award {
+    min-height: 30vh;
+  }
+}
 @media (min-width: 768px) {
   section.resume-section {
     min-height: 100vh;
