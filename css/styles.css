@@ -66,10 +66,10 @@
   height: 240px; /* 기존 180px에서 증가 */
   object-fit: contain;
   border-radius: 50%;
-  background: #f5f5f5;
+  background: #ffffff;
   box-shadow: 0 4px 16px rgba(148,35,207,0.10);
   margin-bottom: 30px;
-  border: 2px solid #9423cf;
+  border: 2px solid #000080;
 }
 .nextstep-caption {
   font-family: 'noto sans', sans-serif;
