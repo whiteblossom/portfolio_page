@@ -10172,7 +10172,10 @@ section.resume-section-award{
   padding-top: 5rem;
   padding-bottom: 5rem;
   max-width: 75rem;
-  min-height: auto; /* 필요하다면 값을 지정 */
+  min-height: 10rem; /* 필요하다면 값을 지정 */
+}
+section.resume-section-award .resume-section-content {
+  width: 100%;
 }
 .next-steps {
   display: flex;
