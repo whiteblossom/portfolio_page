@@ -318,7 +318,7 @@
                             <li><b>배경:</b> 삼성전자는 매년 대규모 마케팅 비용을 집행하지만, 제작된 마케팅 콘텐츠(이미지·영상)가 어떤 특성 때문에 성과를 내는지 판단할 근거가 부족함. 제작·배포·성과 데이터가 여러 시스템에 흩어져 있어 콘텐츠 단위의 효과 분석이 어려운 상황</li>
                             <li><b>목표:</b> AI로 마케팅 콘텐츠의 비주얼 속성(색감·구도·인물·배경 등)을 분석하고 집행 성과와 연결해, 효과적인 콘텐츠와 그렇지 않은 콘텐츠의 특성을 도출함으로써 마케팅 생산성 향상</li>
                             <li><b>주요 서비스:</b> LangGraph와 Gemini LLM 기반 AI Agent를 통한 자연어 질의 답변 제공
-                                <br>(비주얼 분석: AI 추출 속성 기반 이미지·영상 소재 검색, 속성 구성·공통점 분석 / 성과 분석: 성과 조회·추이·비교, 이상 신호 확인, 제작·자산 현황, 데이터 입력 품질 점검)
+                                <br>(이미지 분석: AI 추출 속성 기반 이미지·영상 소재 검색, 속성 구성·공통점 분석 / 성과 분석: 성과 조회·추이·비교, 이상 신호 확인, 제작·자산 현황, 데이터 입력 품질 점검)
                             </li>
                             <li><b>기술 스택:</b> Python, FastAPI, LangGraph, Gemini (Vertex AI), Vertex AI Search, Vertex Vector Search, Cloud SQL (PostgreSQL), BigQuery</li>
                         </ul>
@@ -326,45 +326,53 @@
                         <b class="mt-4 d-block">■ 수행 업무 및 주요 성과</b>
                         <ul class="font-noto mt-2" style="font-size:15px; line-height: 1.6;">
                             <li class="mb-4">
-                                <b>해외정산 Agent 개발</b>
+                                <b>이미지 검색 Agent 개발</b>
                                 <ul class="mt-2 text-secondary" style="list-style-type: circle; margin-left: 20px;">
-                                    <li><b>서비스 개요:</b> 상담원들이 고객 상담 중 답변하기 어려운 '정산' 관련 질의를 보조하는 서비스</li>
-                                    <li><b>비동기 통신 최적화:</b> 답변 생성에 30초 이상 소요되는 문제를 해결하기 위해 2개의 MCI 통신 채널 운영
-                                        <br>- 1차 API: 질의 수신 시 즉각적인 확인 응답 처리
-                                        <br>- 2차 API: 백그라운드에서 답변 생성 완료 후 결과 송신
+                                    <li><b>서비스 개요:</b> 마케터가 자연어 또는 이미지 첨부로 원하는 마케팅 소재(이미지·영상)를 찾고, AI가 추출한 비주얼 속성(색감·구도·인물·배경 등)의 구성과 공통점을 분석하는 서비스</li>
+                                    <li><b>검색 모드 분기:</b> 질문 의도에 따라 두 가지 경로로 처리
+                                        <br>- SEARCH: Vertex AI Search로 조건에 맞는 소재를 찾아 이미지 갤러리로 제공 (첨부 이미지는 유사도 검색 병행)
+                                        <br>- ANALYSIS: Cloud SQL 집계로 속성 분포·공통점을 분석해 차트·표로 제공
                                     </li>
+                                    <li><b>모델명 표기 불일치 해결:</b> 사용자 표현과 DB 저장 표기가 달라 검색 결과가 0건이 되는 문제를 임베딩(text-embedding-005) 기반 Vector Search로 저장 표기 후보를 찾고 LLM이 최종 선택하는 구조로 해결</li>
+                                    <li><b>LLM 결과의 서버 보정:</b> 결과를 통째로 좁히는 조건(미디어 종류·기간·법인·모델 코드)은 LLM 출력 대신 서버 규칙으로 확정해 답변 일관성 확보</li>
+                                    <li><b>0건 방지 및 복구:</b> 정확히 일치하지 않아도 되는 조건(주 피사체·이미지 분위기)은 필터 대신 순위 가산(Boost)으로 처리하고, 결과가 없으면 기간 확장 → 검색어 제거 → 대안 안내 순으로 단계적 복구</li>
+                                    <li><b>멀티턴 검색:</b> 후속 질문("사람 나오는 것만")은 직전 검색 조건을 이어받아 조건을 좁혀 가며 검색</li>
                                 </ul>
                                 
                                 <!-- 토글(접기/펴기) 기능이 적용된 흐름도 -->
                                 <details class="mt-3 mb-2" style="background: #f8f9fa; padding: 12px; border-radius: 8px; border: 1px solid #e9ecef;">
-                                    <summary style="cursor: pointer; font-weight: bold; color: #0d6efd;">해외정산 Agent 워크플로우 흐름도 보기 (클릭)</summary>
+                                    <summary style="cursor: pointer; font-weight: bold; color: #0d6efd;">이미지 검색 Agent 워크플로우 흐름도 보기 (클릭)</summary>
                                     <pre style="margin-top: 15px; font-family: monospace; font-size: 13px; line-height: 1.5; color: #333; overflow-x: auto;">
 [ Start ]
    │
    ▼
-[ Classifier ] ── (escalate=true) ──▶ [ Escalate (상담원 이관) ] ──▶ [ End ]
+[ Intent Classifier ] : 질문 의도·멀티턴 여부 판정 ── (V1 아님) ──▶ [ 일반 성과 분석 흐름 ]
    │
-   ▼ (정상 처리)
-[ Query Processor ] : 쿼리 재작성 및 핵심 정보 추출
-   │
-   ▼
-[ Retriever ] : OpenSearch 벡터 검색
+   ▼ (V1: 비주얼 자산 검색)
+[ Visual Router ] : 비주얼 흐름 진입, 사용자 원질의 보존
    │
    ▼
-[ Generator ] : 검색 결과를 바탕으로 4단계 섹션별 초안 생성
-   │   ├─ [0] 상황 요약 (Situation Summary)
-   │   ├─ [1] 확인된 내용 (Confirmed Details)
-   │   ├─ [2] 확인 필요 항목 (Needs Confirmation)
-   │   └─ [3] 최종 답변 (Final Answer Draft)
+[ Image Analyzer ] : 첨부 이미지 속성 분석 (해상도 PIL + Gemini 속성 분류)
    │
    ▼
-[ Reviewer ] : 답변 품질 검토 및 이슈(환각, 누락 등) 식별
-   │  
-   ▼  
-[ Fixer ] : 이슈가 발생한 섹션만 타겟팅하여 재작성
+[ Query Rewriter ] : 영어 검색 문장 생성, 모드(SEARCH/ANALYSIS) 판정, 제품·법인 추출
    │
-   ▼  
-[ Send Answer ] : 최종 답변 포맷팅 및 후처리
+   ▼
+[ Vector Search ] : 제품명·카테고리·배경색을 저장 표기 후보로 변환 (Vertex Vector Search)
+   │
+   ▼
+[ Filter Refiner ] : LLM이 구조화 필터 생성 → 서버 규칙으로 보정
+   │
+   ▼
+[ Query Builder ] : 모드별 검색 요청 조립
+   │   ├─ SEARCH   : 필터 + 검색어 + 이미지 유사도 + 순위 가산
+   │   └─ ANALYSIS : Cloud SQL 속성 집계
+   │
+   ▼
+[ Vertex Search ] : 검색 실행 및 결과 카드 생성
+   │   ├─ 결과 있음 : 화면에 보이는 카드만 근거로 답변 생성
+   │   ├─ 0건       : 기간 확장 → 검색어 제거 → 대안 안내
+   │   └─ 필터 오류 : [ Fallback Search ] 문제 필드만 제외 후 재검색
    │
    ▼
 [ End ]</pre>
