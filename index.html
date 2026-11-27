@@ -333,9 +333,8 @@
                                         <br>- SEARCH: Vertex AI Search로 조건에 맞는 소재를 찾아 이미지 갤러리로 제공 (첨부 이미지는 유사도 검색 병행)
                                         <br>- ANALYSIS: Cloud SQL 집계로 속성 분포·공통점을 분석해 차트·표로 제공
                                     </li>
-                                    <li><b>모델명 표기 불일치 해결:</b> 사용자 표현과 DB 저장 표기가 달라 검색 결과가 0건이 되는 문제를 임베딩(text-embedding-005) 기반 Vector Search로 저장 표기 후보를 찾고 LLM이 최종 선택하는 구조로 해결</li>
-                                    <li><b>LLM 결과의 서버 보정:</b> 결과를 통째로 좁히는 조건(미디어 종류·기간·법인·모델 코드)은 LLM 출력 대신 서버 규칙으로 확정해 답변 일관성 확보</li>
-                                    <li><b>0건 방지 및 복구:</b> 정확히 일치하지 않아도 되는 조건(주 피사체·이미지 분위기)은 필터 대신 순위 가산(Boost)으로 처리하고, 결과가 없으면 기간 확장 → 검색어 제거 → 대안 안내 순으로 단계적 복구</li>
+                                    <li><b>모델명 표기 불일치 해결:</b> 사용자 표현과 DB 저장 표기가 달라 검색 결과가 0건이 되는 문제를 임베딩 기반 Vector Search로 저장 표기 후보 30개를 찾고 LLM이 최종 선택하는 구조로 해결</li>
+                                    <li><b>0건 방지 및 복구:</b> 정확히 일치하지 않아도 되는 조건(주 피사체·이미지 분위기)은 필터 대신 순위 가산(Boost)으로 처리하고, 결과가 없으면 기간 확장 → 검색어 제거 → 대안 안내 순으로 처리</li>
                                     <li><b>멀티턴 검색:</b> 후속 질문("사람 나오는 것만")은 직전 검색 조건을 이어받아 조건을 좁혀 가며 검색</li>
                                 </ul>
                                 
@@ -346,19 +345,19 @@
 [ Start ]
    │
    ▼
-[ Intent Classifier ] : 질문 의도·멀티턴 여부 판정 ── (V1 아님) ──▶ [ 일반 성과 분석 흐름 ]
+[ Intent Classifier ] : 질문 의도·멀티턴 여부 판정 ── (Visual 아님) ──▶ [ 일반 성과 분석 흐름 ]
    │
-   ▼ (V1: 비주얼 자산 검색)
+   ▼ (Visual: 비주얼 자산 검색)
 [ Visual Router ] : 비주얼 흐름 진입, 사용자 원질의 보존
    │
    ▼
-[ Image Analyzer ] : 첨부 이미지 속성 분석 (해상도 PIL + Gemini 속성 분류)
+[ Image Analyzer ] : 첨부 이미지 속성 분석 (이미지 속성 분류)
    │
    ▼
 [ Query Rewriter ] : 영어 검색 문장 생성, 모드(SEARCH/ANALYSIS) 판정, 제품·법인 추출
    │
    ▼
-[ Vector Search ] : 제품명·카테고리·배경색을 저장 표기 후보로 변환 (Vertex Vector Search)
+[ Vector Search ] : 제품명·카테고리·배경색을 저장 표기 후보 검색 (Vertex Vector Search)
    │
    ▼
 [ Filter Refiner ] : LLM이 구조화 필터 생성 → 서버 규칙으로 보정
@@ -378,16 +377,15 @@
 [ End ]</pre>
                                 </details>
                             </li>
-                            <li class="mb-4"><b>MCP Tool 관리</b></li>
                             <li class="mb-4">
-                                <b>마이카 Agent 초기 개발</b>
-                                <ul class="mt-2 text-secondary" style="list-style-type: circle; margin-left: 20px;">
-                                    <li><b>서비스 개요:</b> 신한카드 MyCar 앱을 사용하는 일반 고객 대상 실시간 AI 상담 챗봇</li>
-                                    <li><b>시스템 아키텍처:</b> 프론트엔드(MyCar 앱) ↔ 백엔드(AI 챗봇) ↔ 외부 시스템 연동</li>
-                                    <li><b>주요 기능:</b> 사내 지식문서(RAG) 기반 자연어 질의응답 처리, 관련 서비스 바로가기 버튼, 후속 추천 질문, 고객센터 연결 컴포넌트 제공</li>
-                                    <li><b>SSE 스트리밍 응답:</b> 답변을 토큰 단위로 화면에 실시간 스트리밍 렌더링. 단일 엔드포인트로 질의를 수신하고, 답변 토큰/컴포넌트/최종 응답을 스트림 형태로 프론트엔드에 전달하여 사용자 경험(UX) 개선</li>
-                                </ul>
-                            </li>
+                            <b>이미지 분석 파이프라인 개발</b>
+                            <ul class="mt-2 text-secondary" style="list-style-type: circle; margin-left: 20px;">
+                                <li><b>서비스 개요:</b> 삼성 마케팅 자산(Brandfolder·PVI 이미지/영상)을 Gemini로 분석해 메타데이터를 생성하고, AI 에이전트가 검색할 수 있게 적재하는 GCP 기반 배치 파이프라인</li>
+                                <li><b>시스템 아키텍처:</b> Cloud Composer(Airflow) DAG ↔ Cloud Batch 컨테이너 ↔ Vertex AI(Gemini 배치 추론) ↔ GCS·BigQuery·Cloud SQL·Vertex AI Search/Vector Search 연동, Terraform·Cloud Build로 인프라와 배포 관리</li>
+                                <li><b>주요 기능:</b> 이미지·영상·ZIP 추출 파일 분석(response schema로 응답 형식 고정), 영상 대표 장면 썸네일 추출, 모델명 교정·그룹화와 제품 코드 매핑 등 결과 정리, Cloud SQL 적재·검색 데이터스토어 import·Vector Search 인덱스 반영</li>
+                                <li><b>비용·안정성 최적화:</b> 온라인 호출 대신 Vertex AI 배치 추론으로 Gemini 비용 50% 절감, 해시 기반 샤딩으로 VM 병렬 처리, 완료 표시(done.json) 기반 증분 처리로 중복 분석 방지, 분석→정리→반영을 한 번에 실행하는 일일 파이프라인 구성</li>
+                            </ul>
+                        </li>
                         </ul>
                     </div>
                 </div>
